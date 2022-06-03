@@ -1,4 +1,3 @@
-# Author: Omkar Pathak
 
 import os
 import argparse

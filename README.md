@@ -1,7 +1,6 @@
 # ResumeParser
 A simple Resume Parser used for extracting information from Resumes/CVs
 
-Note: This is just a wrapper around the pyresparser. The actual source code for the parsing can be found here: [https://github.com/OmkarPathak/pyresparser](https://github.com/OmkarPathak/pyresparser)
 
 # Installation
 
@@ -48,25 +47,23 @@ The module would return a list of dictionary objects with result as follows:
 ```
 [
     {
-        'education': [('BE', '2014')],
-        'email': 'omkarpathak27@gmail.com',
-        'mobile_number': '8087996634',
-        'name': 'Omkar Pathak',
+        'education': [('B Tech', '2022')],
+        'email': 'nirala161@gmail.com',
+        'mobile_number': '9708387178',
+        'name': 'Raushan Kumar',
         'skills': [
-            'Flask',
+            'NLP',
             'Django',
             'Mysql',
             'C',
-            'Css',
-            'Html',
-            'Js',
             'Machine learning',
             'C++',
+            'DSA',
             'Algorithms',
             'Github',
             'Php',
             'Python',
-            'Opencv'
+            'Robotics'
         ]
     }
 ]
@@ -83,7 +80,6 @@ The module would return a list of dictionary objects with result as follows:
 
 # References that helped me get here
 
-- [https://www.kaggle.com/nirant/hitchhiker-s-guide-to-nlp-in-spacy](https://www.kaggle.com/nirant/hitchhiker-s-guide-to-nlp-in-spacy)
 
 - [https://www.analyticsvidhya.com/blog/2017/04/natural-language-processing-made-easy-using-spacy-%E2%80%8Bin-python/](https://www.analyticsvidhya.com/blog/2017/04/natural-language-processing-made-easy-using-spacy-%E2%80%8Bin-python/)
 
