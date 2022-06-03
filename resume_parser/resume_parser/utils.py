@@ -64,6 +64,9 @@ def extract_text(file_path, extension):
             text += ' ' + page
     elif extension == '.docx' or extension == '.doc':
         text = extract_text_from_doc(file_path)
+    elif extension== '.txt':
+        with open(file_path, 'r', encoding = 'utf8') as f:
+            text = " ".join(f.readlines())
     return text
 
 def extract_entity_sections(text):
@@ -132,9 +135,9 @@ def extract_name(nlp_text, matcher):
     :param matcher: object of `spacy.matcher.Matcher`
     :return: string of full name
     '''
-    pattern = [cs.NAME_PATTERN]
+    pattern = cs.NAME_PATTERN
     
-    matcher.add('NAME', None, *pattern)
+    matcher.add('NAME', [pattern])
     
     matches = matcher(nlp_text)
     

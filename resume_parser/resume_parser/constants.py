@@ -1,6 +1,6 @@
 from nltk.corpus import stopwords
 #Raushan Kumar 
-NAME_PATTERN      = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+NAME_PATTERN      = [{'POS': 'PROPN','OP':'+'},{'POS': 'PROPN','OP':'+'}]
 
 # Education (Upper Case Mandatory)
 EDUCATION         = [

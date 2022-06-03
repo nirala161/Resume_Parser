@@ -34,7 +34,7 @@ class ResumeParser(object):
         email      = utils.extract_email(self.__text)
         mobile     = utils.extract_mobile_number(self.__text)
         skills     = utils.extract_skills(self.__nlp, self.__noun_chunks)
-        edu        = utils.extract_education([sent.string.strip() for sent in self.__nlp.sents])
+        edu        = utils.extract_education([sent.text_with_ws for sent in self.__nlp.sents])
         experience = utils.extract_experience(self.__text)
         entities   = utils.extract_entity_sections(self.__text_raw)
         self.__details['name'] = name
