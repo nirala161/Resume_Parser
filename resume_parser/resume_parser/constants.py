@@ -1,12 +1,40 @@
 from nltk.corpus import stopwords
+import re
+
 #Raushan Kumar 
-NAME_PATTERN      = [{'POS': 'PROPN','OP':'+'},{'POS': 'PROPN','OP':'+'}]
+def create_course_map(file):
+    corporate_ending_map={}
+    with open(file, 'r', encoding = 'utf8') as f:
+        for line in f.readlines():
+            line= re.sub(r'\s+', ' ',line)
+            words=[word.strip().lower() for word in line.split('=')]
+            corporate_ending_map[words[0]]=words 
+    temp={}
+    for key in corporate_ending_map:
+        values=corporate_ending_map[key]
+        for value in values:
+            if value not in corporate_ending_map:
+                temp[value]=values
+            else:
+                if len(corporate_ending_map[value])<len(values):
+                    temp[value]=values
+    corporate_ending_map.update(temp)
+    course_ending_list=list(corporate_ending_map.keys())
+    return course_ending_list
+
+NAME_PATTERN      = [{'POS': 'PROPN','ENT_TYPE':'PERSON'},{'POS': 'PROPN','ENT_TYPE':'PERSON'}]
+
+ORG_PATTERN       =[{'POS': 'PROPN','ENT_TYPE':'ORG'}]
 
 # Education (Upper Case Mandatory)
-EDUCATION         = [
-                    'BE','B.E.', 'B.E', 'BS', 'B.S', 'ME', 'M.E', 'M.E.', 'MS', 'M.S', 'BTECH', 'MTECH', 
-                    'SSC', 'HSC', 'CBSE', 'ICSE', 'X', 'XII'
-                    ]
+# file='resume_parser/mediafiles/courses.txt'
+file='mediafiles/courses.txt'
+EDUCATION         = create_course_map(file)
+
+# Corporate endings
+# file='resume_parser/mediafiles/corporate_ending.txt'
+file='mediafiles/corporate_ending.txt'
+CORP_END    = create_course_map(file)
 
 NOT_ALPHA_NUMERIC = r'[^a-zA-Z\d]'
 
