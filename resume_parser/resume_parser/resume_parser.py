@@ -7,7 +7,7 @@ import multiprocessing as mp
 
 class ResumeParser(object):
     def __init__(self, resume):
-        nlp = spacy.load('en_core_web_sm')
+        nlp = spacy.load('en_core_web_trf')
         self.__matcher = Matcher(nlp.vocab)
         self.__details = {
             'name'              : None,
@@ -34,9 +34,11 @@ class ResumeParser(object):
         email      = utils.extract_email(self.__text)
         mobile     = utils.extract_mobile_number(self.__text)
         skills     = utils.extract_skills(self.__nlp, self.__noun_chunks)
-        edu        = utils.extract_education([sent.string.strip() for sent in self.__nlp.sents])
+        # edu        = utils.extract_education([sent.text_with_ws for sent in self.__nlp.sents])
+        edu        = utils.extract_education(self.__text)
         experience = utils.extract_experience(self.__text)
         entities   = utils.extract_entity_sections(self.__text_raw)
+        org_dict    =utils.extract_organisations_name(self.__nlp)
         self.__details['name'] = name
         self.__details['email'] = email
         self.__details['mobile_number'] = mobile
@@ -44,6 +46,8 @@ class ResumeParser(object):
         # self.__details['education'] = entities['education']
         self.__details['education'] = edu
         self.__details['experience'] = experience
+        self.__details['company_names']=org_dict['company']
+        self.__details['college_name']=org_dict['college']
         try:
             self.__details['competencies'] = utils.extract_competencies(self.__text_raw, entities['experience'])
             self.__details['measurable_results'] = utils.extract_measurable_results(self.__text_raw, entities['experience'])

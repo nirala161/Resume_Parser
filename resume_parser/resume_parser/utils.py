@@ -14,7 +14,30 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords 
+from flashtext import KeywordProcessor
+from collections import defaultdict
 
+def check_company(text):
+    for i in cs.CORP_END:
+        if i.lower() in text.lower():
+            return True
+    else:
+        return False
+
+def extract_organisations_name(nlp_text):
+    org_names_dict=defaultdict(list)
+    org_names_dict['college']=[]
+    org_names_dict['company']=[]
+
+    ent_list=[(ent.text, ent.label_) for ent in nlp_text.ents]
+    for token in ent_list:
+        if token[1]=='ORG':
+            if check_company(token[0]):
+                org_names_dict['company'].append(token[0])
+            else:
+                org_names_dict['college'].append(token[0])
+    return org_names_dict
+ 
 def extract_text_from_pdf(pdf_path):
     '''
     Helper function to extract the plain text from .pdf files
@@ -64,6 +87,13 @@ def extract_text(file_path, extension):
             text += ' ' + page
     elif extension == '.docx' or extension == '.doc':
         text = extract_text_from_doc(file_path)
+    elif extension== '.txt':
+        with open(file_path, 'r', encoding = 'utf8') as f:
+            text = " ".join(f.readlines())
+
+    text=re.sub(r'\n+','\n',text)
+    # text=text.replace('\n',',')
+    text=re.sub(r'\s+', ' ', text)
     return text
 
 def extract_entity_sections(text):
@@ -132,9 +162,9 @@ def extract_name(nlp_text, matcher):
     :param matcher: object of `spacy.matcher.Matcher`
     :return: string of full name
     '''
-    pattern = [cs.NAME_PATTERN]
+    pattern = cs.NAME_PATTERN
     
-    matcher.add('NAME', None, *pattern)
+    matcher.add('NAME', [pattern])
     
     matches = matcher(nlp_text)
     
@@ -196,11 +226,18 @@ def extract_education(nlp_text):
     '''
     edu = {}
     # Extract education degree
-    for index, text in enumerate(nlp_text):
-        for tex in text.split():
-            tex = re.sub(r'[?|$|.|!|,]', r'', tex)
-            if tex.upper() in cs.EDUCATION and tex not in cs.STOPWORDS:
-                edu[tex] = text + nlp_text[index + 1]
+
+    # text = re.sub(r'[\W]', r'', nlp_text)
+    text=nlp_text
+
+    keyword_processor=KeywordProcessor()
+    keyword_processor.add_keywords_from_list(cs.EDUCATION)
+
+    keywords_found=keyword_processor.extract_keywords(text)
+    
+    for i in keywords_found:
+        if i not in cs.STOPWORDS:
+            edu[i]=i
 
     # Extract year
     education = []

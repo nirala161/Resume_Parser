@@ -1,5 +1,13 @@
+import sys, os
+parent_dir = os.getcwd() # find the path to module a
+# Then go up one level to the common parent directory
+path = os.path.dirname(parent_dir)
+# Add the parent to sys.pah
+sys.path.append(path)
+
 from django.shortcuts import render, redirect
-from pyresparser import ResumeParser
+# from pyresparser import ResumeParser
+from resume_parser.resume_parser import ResumeParser
 from .models import Resume, UploadResumeModelForm
 from django.contrib import messages
 from django.conf import settings
@@ -27,10 +35,7 @@ def homepage(request):
                     resume.name               = data.get('name')
                     resume.email              = data.get('email')
                     resume.mobile_number      = data.get('mobile_number')
-                    if data.get('degree') is not None:
-                        resume.education      = ', '.join(data.get('degree'))
-                    else:
-                        resume.education      = None
+                    resume.education      = ', '.join(data.get('education'))
                     resume.company_names      = data.get('company_names')
                     resume.college_name       = data.get('college_name')
                     resume.designation        = data.get('designation')
