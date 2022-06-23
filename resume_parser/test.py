@@ -33,6 +33,7 @@ if __name__ == "__main__":
         result['name']=extract_name(nlp_text,matcher)
         result['education']=extract_education(text)
         result['organisation_name']=extract_organisations_name(nlp_text)
+        print('\n\n\n\n')
         print(result)
 
 

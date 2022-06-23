@@ -44,6 +44,7 @@ CORP_END    = create_course_map(file)
 
 #school and college name list
 file='mediafiles/school_college_name.txt'
+# file='resume_parser/mediafiles/school_college_name.txt'
 SCHOOL_COLLEGE_NAME= get_names_text(file)
 
 NOT_ALPHA_NUMERIC = r'[^a-zA-Z\d]'

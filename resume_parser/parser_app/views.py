@@ -36,7 +36,7 @@ def homepage(request):
                     resume.email              = data.get('email')
                     resume.mobile_number      = data.get('mobile_number')
                     resume.education      = ', '.join(data.get('education'))
-                    resume.company_names      = data.get('company_names')
+                    resume.company_name      = data.get('company_name')
                     resume.college_name       = data.get('college_name')
                     resume.designation        = data.get('designation')
                     resume.total_experience   = data.get('total_experience')

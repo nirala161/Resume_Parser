@@ -17,7 +17,8 @@ class ResumeParser(object):
             'education'         : None,
             'experience'        : None,
             'competencies'      : None,
-            'measurable_results': None
+            'measurable_results': None,
+            'company_name'      : None
         }
         self.__resume      = resume
         self.__text_raw    = utils.extract_text(self.__resume, os.path.splitext(self.__resume)[1])
@@ -46,7 +47,7 @@ class ResumeParser(object):
         # self.__details['education'] = entities['education']
         self.__details['education'] = edu
         self.__details['experience'] = experience
-        self.__details['company_names']=org_dict['company']
+        self.__details['company_name']=';\n'.join(org_dict['company'])
         self.__details['college_name']=';\n'.join(org_dict['college'])
         try:
             self.__details['competencies'] = utils.extract_competencies(self.__text_raw, entities['experience'])
