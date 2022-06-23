@@ -10,7 +10,7 @@ import sys, os
 # path = os.path.dirname(parent_dir)
 # # Add the parent to sys.pah
 
-sys.path.append(r'C:\Users\niral\Desktop\Resume_Parser')
+sys.path.append(r'C:\Users\niral\Desktop\Resume_Parser\resume_parser')
 
 
 if __name__ == "__main__":
