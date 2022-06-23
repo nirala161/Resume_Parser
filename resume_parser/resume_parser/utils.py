@@ -24,18 +24,35 @@ def check_company(text):
     else:
         return False
 
+def verify_college_names(college_names_set):
+    keyword_processor=KeywordProcessor()
+    keyword_processor.add_keywords_from_list(list(college_names_set))
+
+    keywords_found=keyword_processor.extract_keywords(cs.SCHOOL_COLLEGE_NAME)
+    
+    college_names_list=[]
+    for i in keywords_found:
+        college_names_list.append(i)
+    return college_names_list
+
 def extract_organisations_name(nlp_text):
     org_names_dict=defaultdict(list)
-    org_names_dict['college']=[]
-    org_names_dict['company']=[]
+
+    college_names_set=set()
+    org_names_set=set()
 
     ent_list=[(ent.text, ent.label_) for ent in nlp_text.ents]
     for token in ent_list:
         if token[1]=='ORG':
             if check_company(token[0]):
-                org_names_dict['company'].append(token[0])
+                org_names_set.add(token[0])
             else:
-                org_names_dict['college'].append(token[0])
+                college_names_set.add(token[0])
+                
+    org_names_dict['company']=list(org_names_set)
+    college_names_list=verify_college_names(college_names_set)
+    org_names_dict['college']=college_names_list
+
     return org_names_dict
  
 def extract_text_from_pdf(pdf_path):
@@ -247,7 +264,7 @@ def extract_education(nlp_text):
             education.append((key, ''.join(year.group(0))))
         else:
             education.append(key)
-    return education
+    return set(education)
 
 def extract_experience(resume_text):
     '''

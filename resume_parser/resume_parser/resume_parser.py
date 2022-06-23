@@ -47,7 +47,7 @@ class ResumeParser(object):
         self.__details['education'] = edu
         self.__details['experience'] = experience
         self.__details['company_names']=org_dict['company']
-        self.__details['college_name']=org_dict['college']
+        self.__details['college_name']=';\n'.join(org_dict['college'])
         try:
             self.__details['competencies'] = utils.extract_competencies(self.__text_raw, entities['experience'])
             self.__details['measurable_results'] = utils.extract_measurable_results(self.__text_raw, entities['experience'])

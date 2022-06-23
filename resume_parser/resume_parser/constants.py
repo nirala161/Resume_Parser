@@ -22,6 +22,12 @@ def create_course_map(file):
     course_ending_list=list(corporate_ending_map.keys())
     return course_ending_list
 
+def get_names_text(file):
+    with open(file, 'r', encoding = 'utf8') as f:
+        text=f.read()
+        text=re.sub(r'\s+',' ',text)
+    return text
+
 NAME_PATTERN      = [{'POS': 'PROPN','ENT_TYPE':'PERSON'},{'POS': 'PROPN','ENT_TYPE':'PERSON'}]
 
 ORG_PATTERN       =[{'POS': 'PROPN','ENT_TYPE':'ORG'}]
@@ -35,6 +41,10 @@ EDUCATION         = create_course_map(file)
 # file='resume_parser/mediafiles/corporate_ending.txt'
 file='mediafiles/corporate_ending.txt'
 CORP_END    = create_course_map(file)
+
+#school and college name list
+file='mediafiles/school_college_name.txt'
+SCHOOL_COLLEGE_NAME= get_names_text(file)
 
 NOT_ALPHA_NUMERIC = r'[^a-zA-Z\d]'
 
