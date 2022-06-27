@@ -2,11 +2,6 @@
 A simple Resume Parser used for extracting information from Resumes/CVs
 
 
-# Installation
-
-```bash
-pip install pyresparser
-```
 
 # GUI
 
